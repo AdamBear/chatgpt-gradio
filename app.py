@@ -3,30 +3,26 @@ import openai
 import gradio as gr
 
 #if you have OpenAI API key as an environment variable, enable the below
-#openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 #if you have OpenAI API key as a string, enable the below
-openai.api_key = "xxxxxx"
+#openai.api_key = os.environ[""]
 
-start_sequence = "\nAI:"
-restart_sequence = "\nHuman: "
 
-prompt = "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: "
+prompt = "请在这里输入您的问题后点提交，可以连续提问"
 
 def openai_create(prompt):
-
-    response = openai.Completion.create(
-    model="text-davinci-003",
-    prompt=prompt,
-    temperature=0.9,
-    max_tokens=150,
-    top_p=1,
-    frequency_penalty=0,
-    presence_penalty=0.6,
-    stop=[" Human:", " AI:"]
+    MODEL = "gpt-3.5-turbo"
+    response = openai.ChatCompletion.create(
+        model=MODEL,
+        messages=[
+            {"role": "system", "content": "你是一名全能的信息助手"},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0,
     )
 
-    return response.choices[0].text
+    return response.choices[0]['message']['content']
 
 
 
@@ -44,12 +40,12 @@ block = gr.Blocks()
 
 
 with block:
-    gr.Markdown("""<h1><center>Build Yo'own ChatGPT with OpenAI API & Gradio</center></h1>
+    gr.Markdown("""<h1><center>ChatGPT API测试演示</center></h1>
     """)
-    chatbot = gr.Chatbot()
-    message = gr.Textbox(placeholder=prompt)
+    chatbot = gr.Chatbot(label="ChatGPT")
+    message = gr.Textbox(label="问题输入", placeholder=prompt)
     state = gr.State()
-    submit = gr.Button("SEND")
+    submit = gr.Button("提交")
     submit.click(chatgpt_clone, inputs=[message, state], outputs=[chatbot, state])
 
-block.launch(debug = True)
+block.launch(share=True, debug = True)
