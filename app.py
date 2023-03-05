@@ -48,4 +48,4 @@ with block:
     submit = gr.Button("提交")
     submit.click(chatgpt_clone, inputs=[message, state], outputs=[chatbot, state])
 
-block.launch(server_name="0.0.0.0", server_port=8889, share=False, debug = True)
+block.launch(server_name="0.0.0.0", server_port=8889, share=True, debug = True)
