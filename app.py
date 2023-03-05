@@ -9,7 +9,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 #openai.api_key = os.environ[""]
 
 
-prompt = "请在这里输入您的问题后点提交，可以连续提问"
+prompt = "请在这里输入您的问题后点'提交'按钮"
 
 def openai_create(prompt):
     MODEL = "gpt-3.5-turbo"
@@ -48,4 +48,4 @@ with block:
     submit = gr.Button("提交")
     submit.click(chatgpt_clone, inputs=[message, state], outputs=[chatbot, state])
 
-block.launch(share=True, debug = True)
+block.launch(server_name="122.112.224.116", debug = True)
