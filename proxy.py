@@ -31,12 +31,10 @@ def proxy():
     path = request.path
     print("request path", path)
     url = f'https://api.openai.com/{path}'
-    # url = request.path
-    # parts = url.split("/")
-    # parts[2] = "api.openai.com"
-    # url = "/".join(parts)
     # 一些自己的逻辑...
-    return requests.request(request.method, url, data=request.data, headers=headers).content
+    return requests.request(
+        request.method, url, data=request.data, headers=headers, cookies=request.cookies, json=request.json
+    ).content
 
 
 if __name__ == '__main__':
