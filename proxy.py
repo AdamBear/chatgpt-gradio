@@ -16,7 +16,8 @@ def proxy(path):
         data=data,
         cookies=request.cookies,
         allow_redirects=False,
-        verify='cert.pem'
+        verify=False
+        #verify='cert.pem'
     )
     print("request", path)
     excluded_headers = ['content-encoding', 'content-length', 'transfer-encoding', 'connection']
@@ -25,4 +26,5 @@ def proxy(path):
     return response
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=88, ssl_context=('cert.pem', 'privkey.pem'))
+    #app.run(host='0.0.0.0', port=88, ssl_context=('cert.pem', 'privkey.pem'))
+    app.run(host='0.0.0.0', port=88, ssl_context="adhoc")
