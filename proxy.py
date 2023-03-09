@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route('/', defaults={'path': ''}, methods=['GET', 'POST', 'PUT', 'DELETE'])
 @app.route('/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def proxy(path):
-    url = f'https://api.openai.com/v1/{path}'
+    url = f'https://api.openai.com/{path}'
     #headers = {'User-Agent': request.headers.get('User-Agent')}
     headers = request.headers
     data = request.get_data()
