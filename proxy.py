@@ -6,8 +6,9 @@ app = Flask(__name__)
 @app.route('/', defaults={'path': ''}, methods=['GET', 'POST', 'PUT', 'DELETE'])
 @app.route('/<path:path>', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def proxy(path):
-    url = f'https://api.openai.com/{path}'
-    headers = {'User-Agent': request.headers.get('User-Agent')}
+    url = f'https://api.openai.com/v1/{path}'
+    #headers = {'User-Agent': request.headers.get('User-Agent')}
+    headers = request.headers
     data = request.get_data()
     resp = requests.request(
         method=request.method,
@@ -17,7 +18,6 @@ def proxy(path):
         cookies=request.cookies,
         allow_redirects=False,
         verify=False
-        #verify='cert.pem'
     )
     print("request", path)
     excluded_headers = ['content-encoding', 'content-length', 'transfer-encoding', 'connection']
@@ -26,5 +26,4 @@ def proxy(path):
     return response
 
 if __name__ == '__main__':
-    #app.run(host='0.0.0.0', port=88, ssl_context=('cert.pem', 'privkey.pem'))
     app.run(host='0.0.0.0', port=88, ssl_context="adhoc")
