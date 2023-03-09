@@ -22,7 +22,7 @@ def proxy(path):
     print("request", path)
     # excluded_headers = ['content-encoding', 'content-length', 'transfer-encoding', 'connection']
     # headers = [(name, value) for (name, value) in resp.raw.headers.items() if name.lower() not in excluded_headers]
-    response = Response(resp.content, resp.status_code, headers)
+    response = Response(resp.content, resp.status_code, resp.headers)
     return response
 
 if __name__ == '__main__':
